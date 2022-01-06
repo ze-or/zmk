@@ -1,7 +1,7 @@
 {
   "files.associations": {
     "*.overlay": "dts",
-    "*.keymap": "dts",
-    "battery_status.h": "c"
-  }
+    "*.keymap": "dts"
+  },
+  "python.formatting.provider": "black"
 }
