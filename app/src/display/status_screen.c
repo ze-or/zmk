@@ -14,6 +14,10 @@
 #include <logging/log.h>
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
+#if IS_ENABLED(CONFIG_SHIELD_FFKB)
+LV_IMG_DECLARE(ffkb);
+#endif
+
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)
 static struct zmk_widget_battery_status battery_status_widget;
 #endif
@@ -38,6 +42,13 @@ lv_obj_t *zmk_display_status_screen() {
     lv_obj_t *screen;
 
     screen = lv_obj_create(NULL, NULL);
+
+#if IS_ENABLED(CONFIG_SHIELD_FFKB)
+    lv_obj_t * ffkb_icon;
+    ffkb_icon = lv_img_create(screen, NULL);
+    lv_img_set_src(ffkb_icon, &ffkb);
+    lv_obj_align(ffkb_icon, NULL, LV_ALIGN_CENTER, 0, 0);
+#endif
 
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)
     zmk_widget_battery_status_init(&battery_status_widget, screen);
