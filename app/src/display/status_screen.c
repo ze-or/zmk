@@ -44,7 +44,7 @@ lv_obj_t *zmk_display_status_screen() {
     screen = lv_obj_create(NULL, NULL);
 
 #if IS_ENABLED(CONFIG_SHIELD_FFKB)
-    lv_obj_t * ffkb_icon;
+    lv_obj_t *ffkb_icon;
     ffkb_icon = lv_img_create(screen, NULL);
     lv_img_set_src(ffkb_icon, &ffkb);
     lv_obj_align(ffkb_icon, NULL, LV_ALIGN_CENTER, 0, 0);
