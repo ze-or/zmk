@@ -6,6 +6,4 @@ target_sources_ifdef(CONFIG_ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN app PRIVATE statu
 
 add_subdirectory_ifdef(CONFIG_ZMK_DISPLAY widgets/)
 
-if(CONFIG_SHIELD_FFKB)
-  zephyr_library_sources(icons/ffkb.c)
-endif()
+zephyr_library_sources_ifdef(CONFIG_SHIELD_FFKB icons/ffkb.c)
