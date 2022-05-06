@@ -7,3 +7,4 @@ target_sources_ifdef(CONFIG_ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN app PRIVATE statu
 add_subdirectory_ifdef(CONFIG_ZMK_DISPLAY widgets/)
 
 zephyr_library_sources_ifdef(CONFIG_SHIELD_FFKB icons/ffkb.c)
+zephyr_library_sources_ifdef(CONFIG_SHIELD_FFKB ffkb_fox_widget.c)
