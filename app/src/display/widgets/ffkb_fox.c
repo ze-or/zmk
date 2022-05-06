@@ -1,4 +1,4 @@
-#include "ffkb_fox_widget.h"
+#include <zmk/display/widgets/ffkb_fox.h>
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -22,7 +22,7 @@ void set_img_src(void *var, lv_anim_value_t val) {
     lv_img_set_src(img, images[val]);
 }
 
-int ffkb_fox_widget_init(struct ffkb_fox_widget *widget, lv_obj_t *parent) {
+int zmk_widget_fox_init(struct zmk_widget_fox *widget, lv_obj_t *parent) {
     widget->obj = lv_img_create(parent, NULL);
     lv_img_set_auto_size(widget->obj, true);
     // lv_img_set_src(widget->obj, &fox_mid);
@@ -41,4 +41,4 @@ int ffkb_fox_widget_init(struct ffkb_fox_widget *widget, lv_obj_t *parent) {
     return 0;
 }
 
-lv_obj_t *ffkb_fox_widget_obj(struct ffkb_fox_widget *widget) { return widget->obj; }
+lv_obj_t *zmk_widget_fox_obj(struct zmk_widget_fox *widget) { return widget->obj; }

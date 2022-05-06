@@ -33,4 +33,9 @@ config ZMK_WIDGET_WPM_STATUS
     select LVGL_USE_LABEL
     select ZMK_WPM
 
+config ZMK_WIDGET_FOX
+    bool "Widget for displaying animated FFKB fox"
+    select LVGL_USE_IMG
+    select LVGL_USE_ANIMATION
+
 endmenu
