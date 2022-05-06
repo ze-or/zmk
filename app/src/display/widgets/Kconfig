@@ -37,5 +37,14 @@ config ZMK_WIDGET_FOX
     bool "Widget for displaying animated FFKB fox"
     select LVGL_USE_IMG
     select LVGL_USE_ANIMATION
+    select ZMK_WPM
+
+if ZMK_WIDGET_FOX
+
+config ZMK_WIDGET_FOX_SLOW_LIMIT
+    int "Upper limit for WPM for showing slow typing animation"
+    default 30
+
+endif # ZMK_WIDGET_FOX
 
 endmenu
