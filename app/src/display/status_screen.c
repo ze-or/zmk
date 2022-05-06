@@ -15,7 +15,9 @@
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #if IS_ENABLED(CONFIG_SHIELD_FFKB)
-LV_IMG_DECLARE(ffkb);
+#include "ffkb_fox_widget.h"
+
+static struct ffkb_fox_widget fox_widget;
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)
@@ -44,10 +46,7 @@ lv_obj_t *zmk_display_status_screen() {
     screen = lv_obj_create(NULL, NULL);
 
 #if IS_ENABLED(CONFIG_SHIELD_FFKB)
-    lv_obj_t *ffkb_icon;
-    ffkb_icon = lv_img_create(screen, NULL);
-    lv_img_set_src(ffkb_icon, &ffkb);
-    lv_obj_align(ffkb_icon, NULL, LV_ALIGN_CENTER, 0, 0);
+    ffkb_fox_widget_init(&fox_widget, screen);
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)
