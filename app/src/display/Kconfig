@@ -9,6 +9,7 @@ menuconfig ZMK_DISPLAY
 	select LVGL_THEMES
 	select LVGL_THEME_MONO
     select LVGL_USE_IMG
+    select LVGL_USE_ANIMATION
 
 if ZMK_DISPLAY
 
