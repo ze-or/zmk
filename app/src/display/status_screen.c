@@ -47,6 +47,7 @@ lv_obj_t *zmk_display_status_screen() {
 
 #if IS_ENABLED(CONFIG_SHIELD_FFKB)
     ffkb_fox_widget_init(&fox_widget, screen);
+    lv_obj_align(ffkb_fox_widget_obj(&fox_widget), NULL, LV_ALIGN_CENTER, 0, 0);
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)

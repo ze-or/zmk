@@ -24,8 +24,19 @@ void set_img_src(void *var, lv_anim_value_t val) {
 
 int ffkb_fox_widget_init(struct ffkb_fox_widget *widget, lv_obj_t *parent) {
     widget->obj = lv_img_create(parent, NULL);
-    lv_img_set_src(widget->obj, &fox_mid);
-    lv_obj_align(widget->obj, NULL, LV_ALIGN_CENTER, 0, 0);
+    lv_img_set_auto_size(widget->obj, true);
+    // lv_img_set_src(widget->obj, &fox_mid);
+    // lv_obj_align(widget->obj, NULL, LV_ALIGN_CENTER, 0, 0);
+
+    lv_anim_init(&widget->anim);
+    lv_anim_set_time(&widget->anim, 1000);
+    // lv_anim_set_repeat_delay(&widget->anim, 500);
+    lv_anim_set_var(&widget->anim, widget->obj);
+    lv_anim_set_values(&widget->anim, 0, 3);
+    lv_anim_set_exec_cb(&widget->anim, set_img_src);
+    lv_anim_set_repeat_count(&widget->anim, LV_ANIM_REPEAT_INFINITE);
+
+    lv_anim_start(&widget->anim);
 
     return 0;
 }
