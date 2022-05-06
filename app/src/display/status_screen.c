@@ -14,10 +14,10 @@
 #include <logging/log.h>
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#if IS_ENABLED(CONFIG_SHIELD_FFKB)
-#include "ffkb_fox_widget.h"
+#if IS_ENABLED(CONFIG_ZMK_WIDGET_FOX)
+#include <zmk/display/widgets/ffkb_fox.h>
 
-static struct ffkb_fox_widget fox_widget;
+static struct zmk_widget_fox fox_widget;
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)
@@ -45,9 +45,9 @@ lv_obj_t *zmk_display_status_screen() {
 
     screen = lv_obj_create(NULL, NULL);
 
-#if IS_ENABLED(CONFIG_SHIELD_FFKB)
-    ffkb_fox_widget_init(&fox_widget, screen);
-    lv_obj_align(ffkb_fox_widget_obj(&fox_widget), NULL, LV_ALIGN_CENTER, 0, 0);
+#if IS_ENABLED(CONFIG_ZMK_WIDGET_FOX)
+    zmk_widget_fox_init(&fox_widget, screen);
+    lv_obj_align(zmk_widget_fox_obj(&fox_widget), NULL, LV_ALIGN_CENTER, 0, 0);
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_WIDGET_BATTERY_STATUS)
