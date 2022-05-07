@@ -20,19 +20,14 @@ LV_IMG_DECLARE(fox_down);
 LV_IMG_DECLARE(fox_bot);
 LV_IMG_DECLARE(fox_up);
 
-const void* images[] = {
-    &fox_mid,
-    &fox_down,
-    &fox_bot,
-    &fox_up
-};
+const void *images[] = {&fox_mid, &fox_down, &fox_bot, &fox_up};
 
 void set_img_src(void *var, lv_anim_value_t val) {
     lv_obj_t *img = (lv_obj_t *)var;
     lv_img_set_src(img, images[val]);
 }
 
-void update_fox_wpm(struct zmk_widget_fox *widget, int wpm) { 
+void update_fox_wpm(struct zmk_widget_fox *widget, int wpm) {
     LOG_DBG("anim state %d", current_anim_state);
     if (wpm == 0) {
         if (current_anim_state != anim_state_idle) {
