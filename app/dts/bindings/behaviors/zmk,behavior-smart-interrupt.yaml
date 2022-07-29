@@ -11,14 +11,17 @@ properties:
   bindings:
     type: phandle-array
     required: true
-  shared-key-positions:
+  ignored-key-positions:
     type: array
     required: false
     default: []
-  shared-layers:
+  ignored-layers:
     type: array
     required: false
     default: []
   timeout-ms:
     type: int
     default: -1
+  tap-ms:
+    type: int
+    default: 5
