@@ -1,9 +1,9 @@
 # Copyright (c) 2022 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-description: Smart Interrupt Behavior
+description: Tri-State Behavior
 
-compatible: "zmk,behavior-smart-interrupt"
+compatible: "zmk,behavior-tri-state"
 
 include: zero_param.yaml
 
