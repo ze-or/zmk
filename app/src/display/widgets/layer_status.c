@@ -24,7 +24,7 @@ struct layer_status_state {
 
 static void set_layer_symbol(lv_obj_t *label, struct layer_status_state state) {
     if (state.label == NULL) {
-        char text[6] = {};
+        char text[8] = {};
 
         sprintf(text, LV_SYMBOL_KEYBOARD "%i", state.index);
 

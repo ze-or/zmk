@@ -104,7 +104,7 @@ bool zmk_ble_active_profile_is_open() {
 }
 
 void set_profile_address(uint8_t index, const bt_addr_le_t *addr) {
-    char setting_name[15];
+    char setting_name[17];
     char addr_str[BT_ADDR_LE_STR_LEN];
 
     bt_addr_le_to_str(addr, addr_str, sizeof(addr_str));
@@ -304,7 +304,7 @@ static int ble_profiles_handle_set(const char *name, size_t len, settings_read_c
         }
 
         if (len != sizeof(struct zmk_ble_profile)) {
-            LOG_ERR("Invalid profile size (got %d expected %d)", len,
+            LOG_ERR("Invalid profile size (got %zu expected %zu)", len,
                     sizeof(struct zmk_ble_profile));
             return -EINVAL;
         }
@@ -576,7 +576,7 @@ static int zmk_ble_init(const struct device *_arg) {
 
     bt_unpair(BT_ID_DEFAULT, NULL);
 
-    for (int i = 0; i < ZMK_BLE_PROFILE_COUNT; i++) {
+    for (uint8 i = 0; i < ZMK_BLE_PROFILE_COUNT; i++) {
         char setting_name[15];
         sprintf(setting_name, "ble/profiles/%d", i);
 

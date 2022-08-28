@@ -152,7 +152,7 @@ static int endpoints_handle_set(const char *name, size_t len, settings_read_cb r
 
     if (settings_name_steq(name, "preferred", NULL)) {
         if (len != sizeof(enum zmk_endpoint)) {
-            LOG_ERR("Invalid endpoint size (got %d expected %d)", len, sizeof(enum zmk_endpoint));
+            LOG_ERR("Invalid endpoint size (got %zu expected %zu)", len, sizeof(enum zmk_endpoint));
             return -EINVAL;
         }
 
