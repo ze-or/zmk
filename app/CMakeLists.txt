@@ -91,3 +91,5 @@ add_subdirectory(src/display/)
 add_subdirectory(src/shell/)
 
 zephyr_cc_option(-Wfatal-errors)
+
+add_subdirectory_ifdef(CONFIG_BOARD_NATIVE_POSIX_X boards/posix/native_posix/)
