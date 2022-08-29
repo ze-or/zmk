@@ -75,6 +75,12 @@ endchoice
 
 endif # ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN
 
+if ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+
+rsource "custom/Kconfig"
+
+endif # ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+
 rsource "widgets/Kconfig"
 
 endif

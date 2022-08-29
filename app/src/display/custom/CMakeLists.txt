@@ -1,0 +1,1 @@
+target_sources_ifdef(CONFIG_ZMK_DISPLAY app PRIVATE test_status_screen.c)
