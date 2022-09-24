@@ -96,6 +96,9 @@ menuconfig CUSTOM_WIDGET_OUTPUT_STATUS
 menuconfig CUSTOM_WIDGET_LAYER_STATUS
 	bool "custom layer status widget"
 
+menuconfig CUSTOM_WIDGET_PERIPHERAL_STATUS
+	bool "custom peripheral status widget"
+
 # config CORNE_ISH_ZEN_20
 #    bool
 
