@@ -1,8 +1,10 @@
 zephyr_library()
 
-if(CONFIG_ZMK_DISPLAY AND CONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM)
-  zephyr_library_sources(custom_status_screen.c)
-  add_subdirectory(widgets)
+if(CONFIG_ZMK_DISPLAY)
+  target_sources_ifdef(CONFIG_ZEN_STATUS_SCREEN_STOCK app PRIVATE custom_status_screen.c)
+  add_subdirectory_ifdef(CONFIG_ZEN_STATUS_SCREEN_STOCK widgets)
+
+  add_subdirectory_ifdef(CONFIG_ZEN_STATUS_SCREEN_8BIT 8bit)
 endif()
 
 zephyr_library_include_directories(${ZEPHYR_LVGL_MODULE_DIR})
