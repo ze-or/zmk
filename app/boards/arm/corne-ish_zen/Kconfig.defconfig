@@ -95,6 +95,7 @@ config ZEN_STATUS_SCREEN_8BIT
 	bool "8-bit playing cards themed status screen"
 	select LVGL_USE_LABEL
 	select LVGL_USE_IMG
+	select LVGL_USE_LINE
 
 endchoice # ZEN_STATUS_SCREEN
 

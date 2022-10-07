@@ -6,6 +6,8 @@
 #include <zmk/usb.h>
 #include <zmk/ble.h>
 #include <zmk/endpoints.h>
+#include <bluetooth/services/bas.h>
+#include <zmk/events/battery_state_changed.h>
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 #include <zmk/events/usb_conn_state_changed.h>
@@ -129,6 +131,25 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_peripheral_status, struct peripheral_status_s
 ZMK_SUBSCRIPTION(widget_peripheral_status, zmk_split_peripheral_status_changed);
 #endif
 
+struct battery_status_state {
+    uint8_t level;
+};
+
+static struct battery_status_state battery_status_get_state(const zmk_event_t *eh) {
+    return (struct battery_status_state) { .level = bt_bas_get_battery_level() };
+}
+
+static void battery_status_update_cb(struct battery_status_state state) {
+    uint8_t line_length = state.level * 4 / 3; // scales between 0 and 75
+    lv_point_t battery_pts[] = {{2, 1}, {2 + line_length, 1}};
+    lv_line_set_points(battery_line, battery_pts, 2);
+}
+
+ZMK_DISPLAY_WIDGET_LISTENER(widget_battery_status, struct battery_status_state,
+                            battery_status_update_cb, battery_status_get_state)
+
+ZMK_SUBSCRIPTION(widget_battery_status, zmk_battery_state_changed);
+
 lv_obj_t *zmk_display_status_screen() {
     lv_obj_t *screen = lv_obj_create(NULL, NULL);
 
@@ -155,6 +176,17 @@ lv_obj_t *zmk_display_status_screen() {
 
     widget_peripheral_status_init();
 #endif
+
+    lv_style_t line_style;
+    lv_style_init(&line_style);
+    lv_style_set_line_width(&line_style, LV_STATE_DEFAULT, 2);
+    lv_style_set_line_color(&line_style, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+
+    battery_line = lv_line_create(screen, NULL);
+    lv_obj_add_style(battery_line, LV_LINE_PART_MAIN, &line_style);
+    lv_obj_align(battery_line, NULL, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+
+    widget_battery_status_init();
 
     return screen;
 }
