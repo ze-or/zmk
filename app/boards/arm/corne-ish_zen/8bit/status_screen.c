@@ -20,8 +20,8 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-LV_IMG_DECLARE(jack_full);
-LV_IMG_DECLARE(queen_full);
+LV_IMG_DECLARE(jack_masked);
+LV_IMG_DECLARE(queen_masked);
 LV_IMG_DECLARE(spade);
 LV_IMG_DECLARE(heart);
 LV_IMG_DECLARE(diamond);
@@ -33,6 +33,10 @@ LV_IMG_DECLARE(excl);
 LV_IMG_DECLARE(excl_r);
 LV_IMG_DECLARE(question);
 LV_IMG_DECLARE(question_r);
+LV_IMG_DECLARE(j_logo);
+LV_IMG_DECLARE(j_logo_r);
+LV_IMG_DECLARE(q_logo);
+LV_IMG_DECLARE(q_logo_r);
 
 lv_obj_t *suit_tl, *suit_br, *rank_tl, *rank_br;
 
@@ -54,28 +58,6 @@ static struct output_status_state get_state(const zmk_event_t *_eh) {
 }
 
 static void output_status_update_cb(struct output_status_state state) {
-    switch (state.selected_endpoint) {
-    case ZMK_ENDPOINT_USB:
-        lv_img_set_src(rank_tl, &usb);
-        lv_img_set_src(rank_br, &usb_r);
-        break;
-    case ZMK_ENDPOINT_BLE:
-        if (state.active_profile_bonded && state.active_profile_connected) {
-            lv_obj_set_hidden(rank_tl, true);
-            lv_obj_set_hidden(rank_br, true);
-        } else {
-            if (state.active_profile_bonded) {
-                lv_img_set_src(rank_tl, &excl);
-                lv_img_set_src(rank_br, &excl_r);
-            } else {
-                lv_img_set_src(rank_tl, &question);
-                lv_img_set_src(rank_br, &question_r);
-            }
-            lv_obj_set_hidden(rank_tl, false);
-            lv_obj_set_hidden(rank_br, false);
-        }
-    }
-
     const lv_img_dsc_t *profile_suit, *profile_suit_r;
     switch (state.active_profile_index) {
     case 1:
@@ -97,6 +79,24 @@ static void output_status_update_cb(struct output_status_state state) {
     }
     lv_img_set_src(suit_tl, profile_suit);
     lv_img_set_src(suit_br, profile_suit_r);
+
+    switch (state.selected_endpoint) {
+    case ZMK_ENDPOINT_USB:
+        lv_img_set_src(rank_tl, &usb);
+        lv_img_set_src(rank_br, &usb_r);
+        break;
+    case ZMK_ENDPOINT_BLE:
+        if (state.active_profile_bonded && state.active_profile_connected) {
+            lv_img_set_src(rank_tl, &j_logo);
+            lv_img_set_src(rank_br, &j_logo_r);
+        } else if (state.active_profile_bonded) {
+            lv_img_set_src(rank_tl, &excl);
+            lv_img_set_src(rank_br, &excl_r);
+        } else {
+            lv_img_set_src(rank_tl, &question);
+            lv_img_set_src(rank_br, &question_r);
+        }
+    }
 }
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_output_status, struct output_status_state,
@@ -114,8 +114,13 @@ static struct peripheral_status_state get_state(const zmk_event_t *_eh) {
 }
 
 static void output_status_update_cb(struct peripheral_status_state state) {
-    lv_obj_set_hidden(rank_tl, state.connected);
-    lv_obj_set_hidden(rank_br, state.connected);
+    if (state.connected) {
+        lv_img_set_src(rank_tl, &q_logo);
+        lv_img_set_src(rank_br, &q_logo_r);
+    } else {
+        lv_img_set_src(rank_tl, &excl);
+        lv_img_set_src(rank_br, &excl_r);
+    }
 }
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_peripheral_status, struct peripheral_status_state,
@@ -128,27 +133,24 @@ lv_obj_t *zmk_display_status_screen() {
 
     lv_obj_t *card_img = lv_img_create(screen, NULL);
 
-#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
-    lv_img_set_src(card_img, &jack_full);
-
-    suit_tl = lv_img_create(screen, NULL);
-    suit_br = lv_img_create(screen, NULL);
-    lv_obj_align(suit_tl, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 27);
-    lv_obj_align(suit_br, NULL, LV_ALIGN_IN_TOP_LEFT, 62, 90);
-#else
-    lv_img_set_src(card_img, &queen_full);
-#endif
-
     rank_tl = lv_img_create(screen, NULL);
     rank_br = lv_img_create(screen, NULL);
     lv_obj_align(rank_tl, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 12);
     lv_obj_align(rank_br, NULL, LV_ALIGN_IN_TOP_LEFT, 62, 105);
 
+    suit_tl = lv_img_create(screen, NULL);
+    suit_br = lv_img_create(screen, NULL);
+    lv_obj_align(suit_tl, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 27);
+    lv_obj_align(suit_br, NULL, LV_ALIGN_IN_TOP_LEFT, 62, 90);
+
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+    lv_img_set_src(card_img, &jack_masked);
+
     widget_output_status_init();
 #else
-    lv_img_set_src(rank_tl, &excl);
-    lv_img_set_src(rank_br, &excl_r);
+    lv_img_set_src(card_img, &queen_masked);
+    lv_img_set_src(suit_tl, &spade);
+    lv_img_set_src(suit_br, &heart);
 
     widget_peripheral_status_init();
 #endif
