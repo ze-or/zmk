@@ -38,7 +38,8 @@ LV_IMG_DECLARE(j_logo_r);
 LV_IMG_DECLARE(q_logo);
 LV_IMG_DECLARE(q_logo_r);
 
-lv_obj_t *suit_tl, *suit_br, *rank_tl, *rank_br;
+static lv_obj_t *suit_tl, *suit_br, *rank_tl, *rank_br;
+static lv_obj_t *battery_line;
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 struct output_status_state {
@@ -113,7 +114,7 @@ static struct peripheral_status_state get_state(const zmk_event_t *_eh) {
     return (struct peripheral_status_state){.connected = zmk_split_bt_peripheral_is_connected()};
 }
 
-static void output_status_update_cb(struct peripheral_status_state state) {
+static void peripheral_status_update_cb(struct peripheral_status_state state) {
     if (state.connected) {
         lv_img_set_src(rank_tl, &q_logo);
         lv_img_set_src(rank_br, &q_logo_r);
@@ -124,7 +125,7 @@ static void output_status_update_cb(struct peripheral_status_state state) {
 }
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_peripheral_status, struct peripheral_status_state,
-                            output_status_update_cb, get_state)
+                            peripheral_status_update_cb, get_state)
 ZMK_SUBSCRIPTION(widget_peripheral_status, zmk_split_peripheral_status_changed);
 #endif
 
