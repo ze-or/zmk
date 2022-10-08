@@ -40,8 +40,10 @@ LV_IMG_DECLARE(j_logo_r);
 LV_IMG_DECLARE(q_logo);
 LV_IMG_DECLARE(q_logo_r);
 
+static lv_style_t line_style;
 static lv_obj_t *suit_tl, *suit_br, *rank_tl, *rank_br;
 static lv_obj_t *battery_line;
+static lv_point_t battery_pts[2] = {{2, 1}, {2, 1}};
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 struct output_status_state {
@@ -140,9 +142,13 @@ static struct battery_status_state battery_status_get_state(const zmk_event_t *e
 }
 
 static void battery_status_update_cb(struct battery_status_state state) {
-    uint8_t line_length = state.level * 4 / 3; // scales between 0 and 75
-    lv_point_t battery_pts[] = {{2, 1}, {2 + line_length, 1}};
-    lv_line_set_points(battery_line, battery_pts, 2);
+    static uint8_t prev_line_length = 0;
+    uint8_t line_length = state.level * 3 / 4; // scales between 0 and 75
+    if (line_length != prev_line_length) {
+        battery_pts[1] = (lv_point_t){2 + line_length, 1};
+        lv_line_set_points(battery_line, battery_pts, 2);
+        prev_line_length = line_length;
+    }
 }
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_battery_status, struct battery_status_state,
@@ -177,7 +183,6 @@ lv_obj_t *zmk_display_status_screen() {
     widget_peripheral_status_init();
 #endif
 
-    lv_style_t line_style;
     lv_style_init(&line_style);
     lv_style_set_line_width(&line_style, LV_STATE_DEFAULT, 2);
     lv_style_set_line_color(&line_style, LV_STATE_DEFAULT, LV_COLOR_BLACK);
