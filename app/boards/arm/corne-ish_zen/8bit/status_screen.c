@@ -63,45 +63,62 @@ static struct output_status_state get_state(const zmk_event_t *_eh) {
 }
 
 static void output_status_update_cb(struct output_status_state state) {
-    const lv_img_dsc_t *profile_suit, *profile_suit_r;
-    switch (state.active_profile_index) {
-    case 1:
-        profile_suit = &heart;
-        profile_suit_r = &spade;
-        break;
-    case 2:
-        profile_suit = &diamond;
-        profile_suit_r = &diamond;
-        break;
-    case 3:
-        profile_suit = &club;
-        profile_suit_r = &club_r;
-        break;
-    default:
-        profile_suit = &spade;
-        profile_suit_r = &heart;
-        break;
+    static bool first_run = true;
+    static struct output_status_state prev_state =
+        (struct output_status_state){.selected_endpoint = 0,
+                                     .active_profile_connected = false,
+                                     .active_profile_bonded = false,
+                                     .active_profile_index = 0};
+
+    if (first_run || state.active_profile_index != prev_state.active_profile_index) {
+        const lv_img_dsc_t *profile_suit, *profile_suit_r;
+        switch (state.active_profile_index) {
+        case 1:
+            profile_suit = &heart;
+            profile_suit_r = &spade;
+            break;
+        case 2:
+            profile_suit = &diamond;
+            profile_suit_r = &diamond;
+            break;
+        case 3:
+            profile_suit = &club;
+            profile_suit_r = &club_r;
+            break;
+        default:
+            profile_suit = &spade;
+            profile_suit_r = &heart;
+            break;
+        }
+        lv_img_set_src(suit_tl, profile_suit);
+        lv_img_set_src(suit_br, profile_suit_r);
     }
-    lv_img_set_src(suit_tl, profile_suit);
-    lv_img_set_src(suit_br, profile_suit_r);
 
     switch (state.selected_endpoint) {
     case ZMK_ENDPOINT_USB:
-        lv_img_set_src(rank_tl, &usb);
-        lv_img_set_src(rank_br, &usb_r);
+        if (first_run || prev_state.selected_endpoint != ZMK_ENDPOINT_USB) {
+            lv_img_set_src(rank_tl, &usb);
+            lv_img_set_src(rank_br, &usb_r);
+        }
         break;
     case ZMK_ENDPOINT_BLE:
-        if (state.active_profile_bonded && state.active_profile_connected) {
-            lv_img_set_src(rank_tl, &j_logo);
-            lv_img_set_src(rank_br, &j_logo_r);
-        } else if (state.active_profile_bonded) {
-            lv_img_set_src(rank_tl, &excl);
-            lv_img_set_src(rank_br, &excl_r);
-        } else {
-            lv_img_set_src(rank_tl, &question);
-            lv_img_set_src(rank_br, &question_r);
+        if (first_run || prev_state.selected_endpoint != ZMK_ENDPOINT_BLE ||
+            state.active_profile_connected != prev_state.active_profile_connected ||
+            state.active_profile_bonded != prev_state.active_profile_bonded) {
+            if (state.active_profile_bonded && state.active_profile_connected) {
+                lv_img_set_src(rank_tl, &j_logo);
+                lv_img_set_src(rank_br, &j_logo_r);
+            } else if (state.active_profile_bonded) {
+                lv_img_set_src(rank_tl, &excl);
+                lv_img_set_src(rank_br, &excl_r);
+            } else {
+                lv_img_set_src(rank_tl, &question);
+                lv_img_set_src(rank_br, &question_r);
+            }
         }
     }
+    first_run = false;
+    prev_state = state;
 }
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_output_status, struct output_status_state,
@@ -138,7 +155,7 @@ struct battery_status_state {
 };
 
 static struct battery_status_state battery_status_get_state(const zmk_event_t *eh) {
-    return (struct battery_status_state) { .level = bt_bas_get_battery_level() };
+    return (struct battery_status_state){.level = bt_bas_get_battery_level()};
 }
 
 static void battery_status_update_cb(struct battery_status_state state) {
