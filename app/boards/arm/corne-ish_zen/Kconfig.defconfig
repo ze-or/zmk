@@ -102,6 +102,10 @@ menuconfig CUSTOM_WIDGET_LAYER_STATUS
 menuconfig CUSTOM_WIDGET_PERIPHERAL_STATUS
 	bool "custom peripheral status widget"
 
+config CUSTOM_WIDGET_LAYER_STATUS_HIDE_HEADING
+	bool "Hide heading strip for layer widget"
+	depends on CUSTOM_WIDGET_LAYER_STATUS
+
 # config CORNE_ISH_ZEN_20
 #    bool
 
