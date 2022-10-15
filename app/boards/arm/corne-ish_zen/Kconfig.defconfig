@@ -106,6 +106,21 @@ config CUSTOM_WIDGET_LAYER_STATUS_HIDE_HEADING
 	bool "Hide heading strip for layer widget"
 	depends on CUSTOM_WIDGET_LAYER_STATUS
 
+choice CUSTOM_WIDGET_LOGO_IMAGE
+	prompt "custom logo widget image"
+	default CUSTOM_WIDGET_LOGO_IMAGE_ZEN
+	help
+	  Image used in custom logo widget
+	config CUSTOM_WIDGET_LOGO_IMAGE_ZEN
+		bool "Corne-ish Zen"
+	config CUSTOM_WIDGET_LOGO_IMAGE_LPKB
+		bool "LPKB"
+	config CUSTOM_WIDGET_LOGO_IMAGE_ZMK
+		bool "ZMK"
+	config CUSTOM_WIDGET_LOGO_IMAGE_MIRYOKU
+		bool "Miryoku"
+endchoice
+
 # config CORNE_ISH_ZEN_20
 #    bool
 
