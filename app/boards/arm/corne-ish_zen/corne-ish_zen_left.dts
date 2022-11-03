@@ -54,6 +54,7 @@
 		design-capacity = <180>; //Battery Design Capacity in mAh
 		taper-current = <2>; //Battery Taper current in mAh
 		terminate-voltage = <2750>; //Battery Terminate Voltage in mV
+		int-gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
 	};
 };
 
