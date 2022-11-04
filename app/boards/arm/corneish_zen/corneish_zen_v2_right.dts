@@ -8,11 +8,6 @@
 #include "corneish_zen.dtsi"
 
 /{
-	chosen {
-		zephyr,display = &epd;
-		zmk,battery = &vbatt;
-	};
-
 	kscan0: kscan {
 		compatible = "zmk,kscan-gpio-matrix";
 		label = "KSCAN";
@@ -41,14 +36,6 @@
 			gpios = <&gpio0 26 GPIO_ACTIVE_HIGH>;
 			label = "Blue LED";
 		};
-	};
-
-	vbatt: vbatt {
-		compatible = "zmk,battery-voltage-divider";
-		label = "BATTERY";
-		io-channels = <&adc 0>;
-		output-ohms = <1960000>;
-		full-ohms = <(1960000 + 810000)>;
 	};
 };
 
