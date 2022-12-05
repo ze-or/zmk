@@ -14,14 +14,15 @@ Definition files:
 - [zmk/app/src/display/Kconfig](https://github.com/zmkfirmware/zmk/blob/main/app/src/display/Kconfig)
 - [zmk/app/src/display/widgets/Kconfig](https://github.com/zmkfirmware/zmk/blob/main/app/src/display/widgets/Kconfig)
 
-| Config                             | Type | Description                                          | Default |
-| ---------------------------------- | ---- | ---------------------------------------------------- | ------- |
-| `CONFIG_ZMK_DISPLAY`               | bool | Enable support for displays                          | n       |
-| `CONFIG_ZMK_WIDGET_LAYER_STATUS`   | bool | Enable a widget to show the highest, active layer    | y       |
-| `CONFIG_ZMK_WIDGET_BATTERY_STATUS` | bool | Enable a widget to show battery charge information   | y       |
-| `CONFIG_ZMK_WIDGET_OUTPUT_STATUS`  | bool | Enable a widget to show the current output (USB/BLE) | y       |
-| `CONFIG_ZMK_WIDGET_WPM_STATUS`     | bool | Enable a widget to show words per minute             | n       |
-| `CONFIG_ZMK_WIDGET_MODS_STATUS`    | bool | Enable a widget to show active modifiers             | n       |
+| Config                                             | Type | Description                                                    | Default |
+| -------------------------------------------------- | ---- | -------------------------------------------------------------- | ------- |
+| `CONFIG_ZMK_DISPLAY`                               | bool | Enable support for displays                                    | n       |
+| `CONFIG_ZMK_WIDGET_LAYER_STATUS`                   | bool | Enable a widget to show the highest, active layer              | y       |
+| `CONFIG_ZMK_WIDGET_BATTERY_STATUS`                 | bool | Enable a widget to show battery charge information             | y       |
+| `CONFIG_ZMK_WIDGET_BATTERY_STATUS_SHOW_PERCENTAGE` | bool | If battery widget is enabled, show percentage instead of icons | n       |
+| `CONFIG_ZMK_WIDGET_OUTPUT_STATUS`                  | bool | Enable a widget to show the current output (USB/BLE)           | y       |
+| `CONFIG_ZMK_WIDGET_WPM_STATUS`                     | bool | Enable a widget to show words per minute                       | n       |
+| `CONFIG_ZMK_WIDGET_MODS_STATUS`                    | bool | Enable a widget to show active modifiers                       | n       |
 
 Note that WPM and modifiers widgets are both shown on the bottom right of the display and hence can conflict with each other.
 
