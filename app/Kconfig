@@ -139,15 +139,13 @@ config ZMK_BLE_CONSUMER_REPORT_QUEUE_SIZE
 	int "Max number of consumer HID reports to queue for sending over BLE"
 	default 5
 
-<<<<<<< HEAD
 config ZMK_BLE_MOUSE_REPORT_QUEUE_SIZE
 	int "Max number of mouse HID reports to queue for sending over BLE"
 	default 20
-=======
+
 config ZMK_BLE_PLOVER_HID_REPORT_QUEUE_SIZE
   int "Max number of plover HID reports to queue for sending over BLE"
   default 5
->>>>>>> bf9234c602bdf61016f16aa6c2ba179b8ab1623f
 
 config ZMK_BLE_CLEAR_BONDS_ON_START
 	bool "Configuration that clears all bond information from the keyboard on startup."
