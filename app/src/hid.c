@@ -374,6 +374,7 @@ struct zmk_hid_consumer_report *zmk_hid_get_consumer_report() {
 
 struct zmk_hid_mouse_report *zmk_hid_get_mouse_report() {
     return &mouse_report;
+}
 
 struct zmk_hid_plover_report *zmk_hid_get_plover_report() {
     return &plover_report;
