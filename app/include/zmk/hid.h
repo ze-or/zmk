@@ -255,6 +255,7 @@ struct zmk_hid_mouse_report_body {
 struct zmk_hid_mouse_report {
     uint8_t report_id;
     struct zmk_hid_mouse_report_body body;
+} __packed;
 
 struct zmk_hid_plover_report_body {
     uint8_t buttons[ZMK_HID_PLOVER_SIZE];
