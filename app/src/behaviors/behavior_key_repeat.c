@@ -123,7 +123,7 @@ static int key_repeat_keycode_state_changed_listener(const zmk_event_t *eh) {
         }
     }
 
-    return ev_captured ? ZMK_EV_EVENT_CAPTURED : ZMK_EV_EVENT_BUBBLE;
+    return ev_captured ? ZMK_EV_EVENT_HANDLED : ZMK_EV_EVENT_BUBBLE;
 }
 
 static int behavior_key_repeat_init(const struct device *dev) {
