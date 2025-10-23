@@ -105,6 +105,7 @@ lv_obj_t *zmk_display_status_screen() {
 // #else
 //     lv_obj_align(zenlogo_icon, LV_ALIGN_BOTTOM_MID, 0, -5);
 // #endif
+lv_obj_align(zenlogo_icon, LV_ALIGN_BOTTOM_MID, 0, 0);
 #endif
 
     return screen;
