@@ -100,11 +100,11 @@ lv_obj_t *zmk_display_status_screen() {
     LV_IMG_DECLARE(miryokulogo);
     lv_img_set_src(zenlogo_icon, &miryokulogo);
   #endif
-#if IS_ENABLED(CONFIG_CUSTOM_WIDGET_LAYER_STATUS_HIDE_HEADING)
-    lv_obj_align(zenlogo_icon, LV_ALIGN_CENTER, 0, 43);
-#else
-    lv_obj_align(zenlogo_icon, LV_ALIGN_BOTTOM_MID, 0, -5);
-#endif
+// #if IS_ENABLED(CONFIG_CUSTOM_WIDGET_LAYER_STATUS_HIDE_HEADING)
+//     lv_obj_align(zenlogo_icon, LV_ALIGN_CENTER, 0, 43);
+// #else
+//     lv_obj_align(zenlogo_icon, LV_ALIGN_BOTTOM_MID, 0, -5);
+// #endif
 #endif
 
     return screen;
